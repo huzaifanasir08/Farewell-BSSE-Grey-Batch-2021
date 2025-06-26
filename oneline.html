@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add One Line</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile scaling -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            resize: vertical;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .response-msg {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* ✅ Responsive for 290px to 450px */
+        @media (max-width: 450px) {
+            body {
+                padding: 10px;
+                height: auto;
+                align-items: flex-start;
+            }
+
+            .form-container {
+                padding: 25px 20px;
+                box-shadow: none;
+                margin-top: 20px;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input[type="text"],
+            textarea {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .response-msg,
+            .back-link,
+            .footer-note {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Add One Line</h2>
+    <form id="onlineForm">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="receiver">Dedicated To</label>
+        <input type="text" id="receiver" name="receiver" required>
+
+        <label for="online">Your One Line</label>
+        <textarea id="online" name="online" rows="4" required></textarea>
+
+        <button type="submit">Submit One Line</button>
+        <div class="response-msg" id="responseMsg"></div>
+    </form>
+
+    <div class="back-link">
+        <a href="file:///D:/Company%20Works/New%20folder/index.html">&larr; Back to Home</a>
+    </div>
+
+    <div class="footer-note">Add a line—make us laugh or think</div>
+</div>
+
+<script>
+    document.getElementById('onlineForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const nameField = document.getElementById('name');
+        const onlineField = document.getElementById('online');
+        const receiverField = document.getElementById('receiver');
+        const responseMsg = document.getElementById('responseMsg');
+
+        const name = nameField.value.trim();
+        const receiver = receiverField.value.trim();
+        const line = onlineField.value.trim();
+
+        responseMsg.textContent = "Submitting...";
+        responseMsg.style.color = "#555";
+
+        try {
+            const res = await fetch('https://fightschool-scrapper.datafunction.ca/add_line/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, line, receiver })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                responseMsg.style.color = 'green';
+                responseMsg.textContent = "One Line submitted successfully! Redirecting...";
+
+                nameField.value = '';
+                receiverField.value = '';
+                onlineField.value = '';
+
+                setTimeout(() => {
+                    window.location.href = 'file:///D:/Company%20Works/New%20folder/index.html';
+                }, 1500);
+            } else {
+                responseMsg.style.color = 'red';
+                responseMsg.textContent = data.error || "Failed to submit.";
+            }
+        } catch (err) {
+            responseMsg.style.color = 'red';
+            responseMsg.textContent = "Network error or invalid response.";
+        }
+    });
+</script>
+
+</body>
+</html>
