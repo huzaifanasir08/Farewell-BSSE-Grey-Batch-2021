@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSSE Grey Batch 2021 - 2025</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+      padding-top: 0;
+    }
+    .hero {
+      background: linear-gradient(to right, #0062E6, #33AEFF);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      animation: fadeInDown 1s ease-out;
+    }
+    .section {
+      padding: 40px 20px;
+    }
+    .quote-card, .joke-card, .stat-card {
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease-in;
+    }
+    .gallery img {
+      border-radius: 8px;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.3s ease-in-out;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: #fff;
+      animation: fadeInUp 1s ease-in;
+    }
+    .scroll-container {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    table {
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+      }
+      .d-flex button {
+        margin-top: 10px;
+        width: 100%;
+      }
+      .hero h1, .hero h2 {
+        font-size: 1.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .scroll-container {
+        max-height: none;
+      }
+    }
+    @media (max-width: 450px) and (min-width: 290px) {
+  .hero {
+    padding: 30px 15px;
+  }
+
+  .hero h1 {
+    font-size: 1.2rem;
+  }
+
+  .hero h2 {
+    font-size: 1rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.2rem !important;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .d-flex.justify-content-between button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .scroll-container {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
+
+  .quote-card,
+  .joke-card,
+  .stat-card {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 0.75rem;
+  }
+
+  footer {
+    font-size: 0.85rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="hero animate__animated animate__fadeInDown">
+    <h1>🎓 Farewell - BSSE Grey Batch 2021 - 2025</h1>
+    <h2>Univeristy of Sialkot</h2>
+    <p>"A journey full of bugs, deadlines, and memories we'll never forget!"</p>
+  </div>
+
+  <div class="section container">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+      <h2 class="animate__animated animate__fadeInLeft">🗣️ Quotes from Friends & Teachers</h2>
+      <button onclick="gotoAddQuote()" class="btn btn-primary">Add Quote</button>
+    </div>
+    <div id="quotes" class="row scroll-container"></div>
+  </div>
+
+  <div class="section bg-light">
+    <div class="container">
+      <h2 class="animate__animated animate__fadeInRight">📊 Fun Stats</h2>
+      <div class="row" id="stats"></div>
+    </div>
+  </div>
+
+  <div class="section container">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+      <h2 class="animate__animated animate__fadeInLeft">🤣 Inside Jokes</h2>
+      <button onclick="gotoAddJoke()" class="btn btn-warning">Add Joke</button>
+    </div>
+    <div id="jokes" class="row scroll-container"></div>
+  </div>
+
+  <div class="section container">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+      <h2 class="animate__animated animate__fadeInLeft">🙌 One Line for Others</h2>
+      <button onclick="gotoAddOneline()" class="btn btn-warning">Add One Line</button>
+    </div>
+    <div id="lines" class="row scroll-container"></div>
+  </div>
+
+  <div class="section container">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+      <h2 class="animate__animated animate__fadeInLeft">👥 Our Colleagues</h2>
+      <button onclick="gotoAddColleague()" class="btn btn-success">Add Colleague</button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Sr#</th>
+            <th>Name</th>
+            <th>Father Name</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Job</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="colleagues"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="animate__animated animate__fadeInUp">
+    Made with ❤️ by <a href="https://huzaifanasir-portfolio.vercel.app" target="_blank" style="color: #f0f6ff; text-decoration: none; font-weight: bold;">Huzaifa Nasir</a> | Class of 2021 - 2025
+  </footer>
+
+  <script>
+    const stats = [
+      { label: "Projects Completed", value: "50+" },
+      { label: "Tea Cups Consumed", value: "10,000+" },
+      { label: "Assignments Copied", value: "90%" },
+      { label: "Bunked Classes", value: "97" },
+      { label: "Teachers Changed", value: "15+" },
+      { label: "Same Teachers", value: "3" }
+    ];
+
+    const statContainer = document.getElementById('stats');
+    stats.forEach(stat => {
+      statContainer.innerHTML += `
+        <div class="col-12 col-md-4 mb-3">
+          <div class="p-3 bg-white stat-card text-center">
+            <h3>${stat.value}</h3>
+            <p>${stat.label}</p>
+          </div>
+        </div>
+      `;
+    });
+
+    function gotoAddQuote() {
+      window.location.href = 'file:///D:/Company%20Works/New%20folder/quote.html';
+    }
+
+    function gotoAddJoke() {
+      window.location.href = 'file:///D:/Company%20Works/New%20folder/joke.html';
+    }
+
+    function gotoAddColleague() {
+      window.location.href = 'file:///D:/Company%20Works/New%20folder/colleague.html';
+    }
+
+    function gotoAddOneline() {
+      window.location.href = 'file:///D:/Company%20Works/New%20folder/oneline.html';
+    }
+
+    fetch("https://fightschool-scrapper.datafunction.ca/get_quotes/")
+      .then(res => res.json())
+      .then(data => {
+        const quoteContainer = document.getElementById("quotes");
+        data.quotes.forEach(q => {
+          quoteContainer.innerHTML += `
+            <div class="col-12 col-md-4 mb-3">
+              <div class="p-3 bg-white quote-card animate__animated animate__fadeInUp">
+                <p>\"${q.quote}\"</p>
+                <small>- ${q.name}</small>
+              </div>
+            </div>
+          `;
+        });
+      });
+
+    fetch("https://fightschool-scrapper.datafunction.ca/get_jokes/")
+      .then(res => res.json())
+      .then(data => {
+        const jokeContainer = document.getElementById("jokes");
+        data.jokes.forEach(j => {
+          jokeContainer.innerHTML += `
+            <div class="col-12 col-md-4 mb-3">
+              <div class="p-3 bg-white joke-card animate__animated animate__fadeInUp">
+                <p>${j.joke}</p>
+              </div>
+            </div>
+          `;
+        });
+      });
+
+    fetch("https://fightschool-scrapper.datafunction.ca/get_lines/")
+      .then(res => res.json())
+      .then(data => {
+        const jokeContainer = document.getElementById("lines");
+        data.onlines.forEach(l => {
+          jokeContainer.innerHTML += `
+            <div class="col-12 col-md-4 mb-3">
+              <div class="p-3 bg-white joke-card animate__animated animate__fadeInUp">
+                <p>\"${l.line}\"</p>
+                <p>To: ${l.receiver}</p>
+                <p>From: ${l.name}</p>
+              </div>
+            </div>
+          `;
+        });
+      });
+
+    fetch("https://fightschool-scrapper.datafunction.ca/get_colleagues/")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById("colleagues");
+        data.colleagues.forEach((col, i) => {
+          tbody.innerHTML += `
+            <tr class="animate__animated animate__fadeInUp">
+              <td>${i + 1}</td>
+              <td>${col.name}</td>
+              <td>${col.father_name}</td>
+              <td>${col.contact}</td>
+              <td>${col.address}</td>
+              <td>${col.job}</td>
+              <td><a href="${col.link}" target="_blank">Link</a></td>
+            </tr>
+          `;
+        });
+      });
+  </script>
+
+</body>
+</html>
