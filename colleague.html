@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add a Colleague</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 40px 35px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      transition: all 0.3s ease;
+    }
+
+    .form-container:hover {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2b2e4a;
+      font-weight: 600;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+      font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="url"],
+    textarea {
+      width: 100%;
+      padding: 13px 15px;
+      margin-bottom: 22px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .response-msg {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+      min-height: 20px;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .back-link a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 15px;
+    }
+
+    /* 📱 Mobile Responsive Styles */
+    @media (max-width: 450px) {
+      .form-container {
+        padding: 25px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin-bottom: 25px;
+      }
+
+      label {
+        font-size: 13px;
+      }
+
+      input,
+      textarea {
+        padding: 10px 12px;
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 12px;
+      }
+
+      .response-msg,
+      .back-link,
+      .footer-note {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>👤 Add a Colleague</h2>
+
+    <form id="colleagueForm" novalidate>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+      <label for="father_name">Father's Name</label>
+      <input type="text" id="father_name" name="father_name" placeholder="Father's name" required>
+
+      <label for="contact">Contact Number</label>
+      <input type="tel" id="contact" name="contact" placeholder="e.g., +1234567890" pattern="[0-9+ ]{8,15}" required>
+
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" placeholder="Current address (abroad / national)" required>
+
+      <label for="job">Current Job</label>
+      <input type="text" id="job" name="job" placeholder="Job type or other kind of stuff working on currently." required>
+
+      <label for="link">Your Profile Link</label>
+      <input type="url" id="link" name="link" placeholder="Any profile link. LinkedIn, Portfolio, Facebook, etc." required>
+
+      <button type="submit">Submit Colleague</button>
+      <div class="response-msg" id="responseMsg"></div>
+    </form>
+
+    <div class="back-link">
+      <a href="file:///D:/Company%20Works/New%20folder/index.html">&larr; Back to Home</a>
+    </div>
+
+    <div class="footer-note">Let's stay connected. Add your peers today.</div>
+  </div>
+
+  <script>
+    document.getElementById('colleagueForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const responseMsg = document.getElementById('responseMsg');
+
+      const data = {
+        name: form.name.value.trim(),
+        fatherName: form.father_name.value.trim(),
+        contact: form.contact.value.trim(),
+        address: form.address.value.trim(),
+        job: form.job.value.trim(),
+        link: form.link.value.trim()
+      };
+
+      if (!Object.values(data).every(Boolean)) {
+        responseMsg.textContent = "❗ Please fill in all fields.";
+        responseMsg.style.color = "red";
+        return;
+      }
+
+      responseMsg.textContent = "⏳ Submitting...";
+      responseMsg.style.color = "#555";
+
+      try {
+        const res = await fetch('https://fightschool-scrapper.datafunction.ca/add_colleague/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          responseMsg.style.color = 'green';
+          responseMsg.textContent = "✅ Submitted successfully! Redirecting...";
+          form.reset();
+
+          setTimeout(() => {
+            window.location.href = 'file:///D:/Company%20Works/New%20folder/index.html';
+          }, 1500);
+        } else {
+          responseMsg.style.color = 'red';
+          responseMsg.textContent = result.error || "❌ Submission failed.";
+        }
+      } catch (error) {
+        responseMsg.style.color = 'red';
+        responseMsg.textContent = "⚠️ Network error or server unreachable.";
+      }
+    });
+  </script>
+
+</body>
+</html>
